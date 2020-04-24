@@ -34,7 +34,7 @@ function executeAjax() {
 								+ element.departmentName
 								+ '</td><td><button onclick="urlq="'
 								+ element.departmentName
-								+ '" type="button">編集</button></td><td><button onclick="urlq="'
+								+ '" type="button">編集</button></td><td><button onclick="http://localhost:8080/myCart/departmentEdit.html?q="'
 								+ element.departmentName
 								+ '" type="button">削除</button></td></tr>';
 
@@ -68,10 +68,10 @@ var requestQuery = {
 								+ '</td>'
 								+ '<td>'
 								+ element.departmentName
-								+ '</td><td><button onclick="urlq="'
-								+ element.departmentName
-								+ '" type="button">編集</button></td><td><button onclick="urlq="'
-								+ element.departmentName
+								+ '</td><td><button onclick="location.href=departmentEdit.html?q='
+								+ element.departmentId
+								+ '" type="button">編集</button></td><td><button onclick="location.href = departmentEdit.html?q='
+								+ element.departmentId
 								+ '" type="button">削除</button></td></tr>';
 
 						$('#table_data').append(record)
