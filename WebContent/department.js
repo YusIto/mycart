@@ -8,7 +8,6 @@ function executeAjax() {
 	parameter = decodeURIComponent(parameter);
 	parameter = parameter.split('=')[1];
 
-
 	var requestQuery = {
 		q : parameter
 	};
@@ -26,16 +25,20 @@ function executeAjax() {
 
 						var element = json[i];
 
+						var url = 'departmentEdit.html?q='+ element.departmentId ;
+
+						var eve = 'location.href=';
+
 						var record = '<tr>'
 								+ '<td>'
 								+ element.departmentId
 								+ '</td>'
 								+ '<td>'
 								+ element.departmentName
-								+ '</td><td><button onclick="urlq="'
-								+ element.departmentName
-								+ '" type="button">編集</button></td><td><button onclick="http://localhost:8080/myCart/departmentEdit.html?q="'
-								+ element.departmentName
+								+ '</td><td><button onclick="'+ eve +"'"+ url +"'"+'"'
+								
+								+ '" type="button">編集</button></td><td><button onclick="location.href = departmentEdit.html?q='
+								+ element.departmentId
 								+ '" type="button">削除</button></td></tr>';
 
 						$('#table_data').append(record)
@@ -44,13 +47,14 @@ function executeAjax() {
 			});
 }
 
-function deleteDepartment(){
+function deleteDepartment() {
 
-var requestQuery = {
+	var requestQuery = {
 		q : $('#delete').val()
 	};
 
-		$.ajax({
+	$
+			.ajax({
 				type : 'GET',
 				url : '/myCart/DepartmentDeleteServlet',
 				dataType : 'json',
@@ -77,13 +81,12 @@ var requestQuery = {
 						$('#table_data').append(record)
 					}
 				},
-					error : function(XMLHttpRequest, textStatus, errorThrown) {
-						// サーバーとの通信に失敗した時䛾処理
-						alert('データの通信に失敗しました');
-						console.log(errorThrown)
-						}
-						}
-		);
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					// サーバーとの通信に失敗した時䛾処理
+					alert('データの通信に失敗しました');
+					console.log(errorThrown)
+				}
+			});
 
 }
 
