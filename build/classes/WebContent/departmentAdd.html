@@ -6,19 +6,22 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 <!-- JavaScriptの読み込み -->
 <script type="text/javascript" src="jquery-1.10.2.js"></script>
-<script type="text/javascript" src="departmentEdit.js"></script>
+<script type="text/javascript" src="departmentAdd.js"></script>
 <title>部署の追加・編集</title>
 <title>Insert title here</title>
 </head>
 <body>
 
 	<div class="add_edit">
-		<h1>部署の編集</h1>
-		<form action="#" method="post">
+		<h1>部署の追加</h1>
+		<form>
 			<p>
-				部署名：<input type="text" id="js_edit_input"></input>
+				部署ID：<input type="text" id="js_input_id"></input>
 			</p>
-			<p><input type="submit" value="設定する"></p>
+			<p>
+				部署名：<input type="text" id="js_input_name"></input>
+			</p>
+			<p><input type="button" id="js_add_button" value="設定する"></p>
 		</form>
 
 	</div>
