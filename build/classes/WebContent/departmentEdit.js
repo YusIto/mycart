@@ -1,4 +1,4 @@
-$(function edit() {
+function edit() {
 
 	var data = {
 		requestQuery : $('#js_edit_input').val()
@@ -7,7 +7,7 @@ $(function edit() {
 	$
 			.ajax({
 				type : "POST",
-				url : "/myCart/DepartmentEditServlet",
+				url : "http://localhost:8080/myCart/DepartmentEditServlet",
 				data: data,
 				datatype : 'json',
 				success : function(json) {
@@ -26,7 +26,7 @@ $(function edit() {
 
 			});
 
-});
+}
 
 $(document).ready(function() {
 	$('#js_edit_button').click(edit)
