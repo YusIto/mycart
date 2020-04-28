@@ -11,11 +11,11 @@ function executeAjax() {
 	var requestQuery = {
 		q : parameter
 	};
-
-	$
-			.ajax({
+	console.log("ok")
+	$.ajax({
 				type : 'GET',
 				url : '/myCart/DepartmentServlet',
+//				async : false,
 				dataType : 'json',
 				data : requestQuery,
 				success : function(json) {

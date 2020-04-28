@@ -62,7 +62,7 @@ public class DepartmentServlet extends HttpServlet {
 				Statement stmt = con.createStatement();
 
 				// SQLの命令文を実行し、その結果をResultSet型のrsに代入します
-				ResultSet rs1 = stmt.executeQuery("select * from MS_DEPARTMENT where 1=1");) {
+				ResultSet rs1 = stmt.executeQuery("select * from MS_DEPARTMENT");) {
 
 			// 情報を保持するため、Department型の変数dptを宣言
 			// 変数dptはJSPに渡すための社員情報を保持させます

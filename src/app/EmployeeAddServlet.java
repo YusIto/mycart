@@ -17,14 +17,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Servlet implementation class DepartmentAddServlet
  */
-@WebServlet("/DepartmentAddServlet")
-public class DepartmentAddServlet extends HttpServlet {
+@WebServlet("/EmployeeAddServlet")
+public class EmployeeAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DepartmentAddServlet() {
+    public EmployeeAddServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,6 +35,7 @@ public class DepartmentAddServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -43,7 +44,6 @@ public class DepartmentAddServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("呼ばれました");
-		// したのこれいる？
 		// JDBCドライバの準備
 		try {
 		// JDBCドライバのロード
@@ -55,9 +55,28 @@ public class DepartmentAddServlet extends HttpServlet {
 		}
 
 		// アクセス元のHTMLでｑに設定された値を取得して、String型の変数idに代入
-		String departmentId = request.getParameter("departmentId");
+		String syainId = request.getParameter("syainId");
 		// 商品名
-		String departmentName = request.getParameter("departmentName");
+		String syainName = request.getParameter("syainName");
+
+		String syainAge = request.getParameter("syainAge");
+
+		String syainSex = request.getParameter("syainSex");
+
+		String syainPostalcode = request.getParameter("syainPostalcode");
+
+		String syainPrefecture = request.getParameter("syainPrefecture");
+
+		String syainAddress = request.getParameter("syainAddress");
+
+//		String syainDepartmentId = request.getParameter("syainDepartmentid");
+
+		String syainDepartmentName = request.getParameter("syainDepartmentname");
+		System.out.println("部署名は"+syainDepartmentName);
+
+		String syainNyuusya = request.getParameter("syainNyuusya");
+
+		String syainTaisya = request.getParameter("syainTaisya");
 
 		// データベースにアクセスするために、データベースのURLとユーザ名とパスワードを指定します
 		// ※SQLのログを出力するため変数urlの値は基本的な形式から少し変更を加えています。
@@ -68,9 +87,16 @@ public class DepartmentAddServlet extends HttpServlet {
 
 		//実行するSQL文 --String sql
 
-		String sql = "Insert into MS_DEPARTMENT(ID, DEPARTMENT_NAME) values ('"+ departmentId +"','" +departmentName +"')";
-
+//		String sql = "insert into MS_SYAIN (SYAIN_ID, SYAIN_NAME, SYAIN_AGE, SYAIN_SEX, SYAIN_POSTALCODE, SYAIN_PREFECTURE, SYAIN_ADDRESS, DEPARTMENT_ID, SYAIN_NYUUSYA,SYAIN_TAISYA) "select "+syainId+", '"+syainName+"', "+syainAge+", '"+syainSex+"', '"+syainPostalcode+"', '"+syainAddress+"', '"+syainPrefecture+"', MS_DEPARTMENT.ID, '"+syainNyuusya+"','"+syainTaisya+"' from MS_DEPARTMENT where MS_DEPARTMENT.DEPARTMENT_NAME ='"+syainDepartmentName +"';";
+		String sql = "insert into MS_SYAIN (SYAIN_ID, SYAIN_NAME, SYAIN_AGE, SYAIN_SEX, SYAIN_POSTALCODE, SYAIN_PREFECTURE,  \n" +
+		"SYAIN_ADDRESS, DEPARTMENT_ID, SYAIN_NYUUSYA,SYAIN_TAISYA)  \n" +
+		"select "+syainId +", '"+syainName +"', "+syainAge +", '"+ syainSex+"', '"+syainPostalcode +"', '"+syainPrefecture +"',  \n" +
+		"'"+syainAddress +"', MS_DEPARTMENT.ID, '"+syainNyuusya +"','"+syainTaisya +"'  \n" +
+		"from MS_DEPARTMENT  \n" +
+		"where MS_DEPARTMENT.DEPARTMENT_NAME ='"+syainDepartmentName +"' \n";
+		//確認
 		System.out.println(sql);
+
 		// エラーが発生するかもしれない処理はtry-catchで囲みます
 		// この場合はDBサーバへの接続に失敗する可能性があります
 		try (
@@ -88,9 +114,13 @@ public class DepartmentAddServlet extends HttpServlet {
 			// JSONで出力する
 			pw.append(new ObjectMapper().writeValueAsString("Added"));
 
+
+			System.out.println(sql);
+
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);
 		}
 	}
 
 }
+

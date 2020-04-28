@@ -35,7 +35,7 @@ public class EmployeeListServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		// アクセス元のHTMLでｑに設定された値を取得して、String型の変数idに代入
-		String id = request.getParameter("q");
+		// String id = request.getParameter("q");
 
 		// データベースにアクセスするために、データベースのURLとユーザ名とパスワードを指定します
 		// ※SQLのログを出力するため変数urlの値は基本的な形式から少し変更を加えています。
@@ -54,32 +54,33 @@ public class EmployeeListServlet extends HttpServlet {
 				Statement stmt = con.createStatement();
 
 				// SQLの命令文を実行し、その結果をResultSet型のrsに代入します
-				ResultSet rs1 = stmt.executeQuery("select * from MS_DEPARTMENT where 1=1");) {
+				ResultSet rs1 = stmt.executeQuery(
+						"select MS_SYAIN.SYAIN_ID, MS_SYAIN.SYAIN_NAME, MS_SYAIN.SYAIN_AGE, MS_SYAIN.SYAIN_SEX, MS_SYAIN.SYAIN_POSTALCODE, MS_SYAIN.SYAIN_PREFECTURE, MS_SYAIN.SYAIN_ADDRESS, MS_DEPARTMENT.DEPARTMENT_NAME, MS_SYAIN.SYAIN_NYUUSYA, MS_SYAIN.SYAIN_TAISYA from MS_SYAIN, MS_DEPARTMENT where 1=1 and  MS_SYAIN.DEPARTMENT_ID = MS_DEPARTMENT.ID order by SYAIN_ID");) {
 
 			// 情報を保持するため、Department型の変数dptを宣言
 			// 変数dptはJSPに渡すための社員情報を保持させます
 			// Department dpt = new Department();
 
-			List<Department> dptList = new ArrayList<>();
+			List<Employee> empList = new ArrayList<>();
 
 			// SQL実行結果を保持している変数rsから部署情報を取得
 			// rs.nextは取得した部署情報表に次の行があるとき、trueになります
 			// 次の行がないときはfalseになります
 			while (rs1.next()) {
-				Department dpt = new Department();
-				dpt.setDepartmentId(rs1.getString("ID")); // 社員IDを変数empに代入
-				dpt.setDepartmentName(rs1.getString("DEPARTMENT_NAME"));// SQL実行結果のsyainname列の値を取得し変数empに代入します
-				dptList.add(dpt);
+				Employee emp = new Employee();
+				emp.setId(rs1.getString("SYAIN_ID")); // 社員IDを変数empに代入
+				emp.setName(rs1.getString("SYAIN_NAME"));// SQL実行結果のsyainname列の値を取得し変数empに代入します
+				empList.add(emp);
 			}
 
 			// 確認用にsysout
-			System.out.println(dptList);
+			System.out.println(empList);
 
 			// アクセスした人に応答するためのJSONを用意する
 			PrintWriter pw = response.getWriter();
 
 			// JSONで出力する
-			pw.append(new ObjectMapper().writeValueAsString(dptList));
+			pw.append(new ObjectMapper().writeValueAsString(empList));
 
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);
@@ -100,38 +101,43 @@ public class EmployeeListServlet extends HttpServlet {
 			// ドライバが設定されていない場合はエラーになります
 			throw new RuntimeException(String.format("JDBCドライバのロードに失敗しました。詳細:[%s]", e.getMessage()), e);
 		}
-		// // アクセス元のHTMLでｑに設定された値を取得して、String型の変数idに代入
-		// String id = request.getParameter("departmentId");
-		//
-		// // データベースにアクセスするために、データベースのURLとユーザ名とパスワードを指定します
-		// // ※SQLのログを出力するため変数urlの値は基本的な形式から少し変更を加えています。
-		// // そのためシステム構築2で使い回すときは注意下さい！
-		// String url = "jdbc:log4jdbc:oracle:thin:@localhost:1521:XE";
-		// String user = "webapp";
-		// String pass = "webapp";
-		//
-		// // エラーが発生するかもしれない処理はtry-catchで囲みます
-		// // この場合はDBサーバへの接続に失敗する可能性があります
-		// try (
-		// // データベースへ接続します
-		// Connection con = DriverManager.getConnection(url, user, pass);
-		//
-		// // SQLの命令文を実行するための準備をおこないます
-		// Statement stmt = con.createStatement();) {
-		// // SQLの命令文を実行
-		// stmt.executeQuery("delete from MS_DEPARTMENT where ID ='" + id +
-		// "'");
-		//
-		// // アクセスした人に応答するためのJSONを用意する
-		// PrintWriter pw = response.getWriter();
-		//
-		// // JSONで出力する
-		// pw.append(new ObjectMapper().writeValueAsString("deleted"));
-		// } catch (Exception e) {
-		// throw new
-		// RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]",
-		// e.getMessage()), e);
-		// }
-		// }
+		// アクセス元のHTMLでsyainIdに設定された値を取得して、String型の変数idに代入
+		String syainId = request.getParameter("syainId");
+
+		// データベースにアクセスするために、データベースのURLとユーザ名とパスワードを指定します
+		// ※SQLのログを出力するため変数urlの値は基本的な形式から少し変更を加えています。
+		// そのためシステム構築2で使い回すときは注意下さい！
+		String url = "jdbc:log4jdbc:oracle:thin:@localhost:1521:XE";
+		String user = "webapp";
+		String pass = "webapp";
+
+
+		//実行するSQL文 --String sql
+
+		String sql = "delete from MS_SYAIN where SYAIN_ID ="+syainId+"\n";
+
+		System.out.println(sql);
+		// エラーが発生するかもしれない処理はtry-catchで囲みます
+		// この場合はDBサーバへの接続に失敗する可能性があります
+		try (
+				// データベースへ接続します
+				Connection con = DriverManager.getConnection(url, user, pass);
+
+				// SQLの命令文を実行するための準備をおこないます
+				Statement stmt = con.createStatement();) {
+
+
+
+			// SQLの命令文を実行
+			stmt.executeUpdate(sql);
+
+			// アクセスした人に応答するためのJSONを用意する
+			PrintWriter pw = response.getWriter();
+
+			// JSONで出力する
+			pw.append(new ObjectMapper().writeValueAsString("deleted"));
+		} catch (Exception e) {
+			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);
+		}
 	}
 }
