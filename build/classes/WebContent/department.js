@@ -57,9 +57,9 @@ function executeAjax() {
 }
 
 function deleteAjax() {
-	console.log($(this).attr('DepartmentId'));
+	console.log($(this).attr('departmentId'));
 	var requestQuery = {
-		departmentId : $(this).attr('DepartmentId')
+		departmentId : $(this).attr('departmentId')
 	};
 	'use strict';
 	$.ajax({

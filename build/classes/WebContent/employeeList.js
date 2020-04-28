@@ -27,16 +27,16 @@ function executeAjax() {
 						var element = json[i];
 
 						var url = 'employeeEdit.html?q='
-								+ element.syainId;
+								+ element.id;
 
 						var eve = 'location.href=';
 
 						var record = '<tr>'
 								+ '<td>'
-								+ element.syainId
+								+ element.id
 								+ '</td>'
 								+ '<td>'
-								+ element.syainName
+								+ element.name
 								+ '</td><td><button onclick="'
 								+ eve
 								+ "'"
@@ -45,12 +45,12 @@ function executeAjax() {
 								+ '"'
 
 								+ '" type="button">編集</button></td><td><button id="delete'
-								+ element.syainId + '" syainId="'
-								+ element.syainId + '">削除</button></td>'
+								+ element.id + '" syainId="'
+								+ element.id + '">削除</button></td>'
 
 						$('#table_data').append(record)
 
-						$("#delete" + element.syainId).bind('click',
+						$("#delete" + element.id).bind('click',
 								deleteAjax);
 					}
 				}

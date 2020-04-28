@@ -33,19 +33,17 @@ public class DepartmentEditServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		System.out.println("呼ばれました");
 		// したのこれいる？
 		// JDBCドライバの準備
 		try {
@@ -58,8 +56,12 @@ public class DepartmentEditServlet extends HttpServlet {
 		}
 
 		// アクセス元のHTMLでｑに設定された値を取得して、String型の変数idに代入
-		String departmentName = request.getParameter("q");
+		String departmentId = request.getParameter("departmentId");
+		// 商品名
+		String departmentName = request.getParameter("departmentName");
 
+//		確認
+		System.out.println(departmentId +departmentName);
 		// データベースにアクセスするために、データベースのURLとユーザ名とパスワードを指定します
 		// ※SQLのログを出力するため変数urlの値は基本的な形式から少し変更を加えています。
 		// そのためシステム構築2で使い回すときは注意下さい！
@@ -69,8 +71,9 @@ public class DepartmentEditServlet extends HttpServlet {
 
 		//実行するSQL文 --String sql
 
-		String sql = "Insert into MS_DEPARTMENT(ID, DEPARTMENT_NAME) values (, '"+ departmentName +"')";
+		String sql = "update MS_DEPARTMENT set DEPARTMENT_NAME ='"+departmentName +"' where ID ="+ departmentId +"\n" ;
 
+		System.out.println(sql);
 		// エラーが発生するかもしれない処理はtry-catchで囲みます
 		// この場合はDBサーバへの接続に失敗する可能性があります
 		try (
@@ -86,7 +89,8 @@ public class DepartmentEditServlet extends HttpServlet {
 			PrintWriter pw = response.getWriter();
 
 			// JSONで出力する
-			pw.append(new ObjectMapper().writeValueAsString("ok"));
+			pw.append(new ObjectMapper().writeValueAsString("an edit was done."));
+
 		} catch (Exception e) {
 			throw new RuntimeException(String.format("検索処理の実施中にエラーが発生しました。詳細：[%s]", e.getMessage()), e);
 		}
