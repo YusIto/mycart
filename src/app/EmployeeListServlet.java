@@ -17,9 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * Servlet implementation class DepartmentList
- */
 @WebServlet("/EmployeeListServlet")
 public class EmployeeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
