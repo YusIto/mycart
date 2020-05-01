@@ -127,10 +127,12 @@ function searchSyain() {
 					// console.log(json)
 
 					// ここでリセット
-					var table = document.getElementById('#table_data')
+					var table = document.getElementById('table_data')
 					console.log(table)
-					while ('#table_data'.rows[0])
+					while (table.rows[0])
 						table.deleteRow(0);
+
+					$('#table_data').append('<tr><th>社員ID</th><th>名前</th></tr>')
 
 					for (var i = 0; i < json.length; i++) {
 						var element = json[i];

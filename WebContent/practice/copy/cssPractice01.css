@@ -1,0 +1,56 @@
+html, body {
+	margin: 0;
+	border: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.panel-left {
+	float: left;
+	width: 50%;
+	height: 100%;
+}
+
+.panel-right {
+	position: relative;
+	float: right;
+	width: 50%;
+	height: 50%;
+}
+
+.bg-blue {
+	background-color: #BBDEFB;
+}
+
+.bg-green {
+	background-color: #C8E6C9;
+}
+
+.bg-pink {
+	background-color: #F8BBD0;
+}
+
+.button {
+	position: absolute;
+	right: 24px;
+	bottom: 24px;
+	border: 0px;
+	border -radius: 4px;
+	padding: 8px 24px;
+	background-color: blue;
+	color: #fff;
+	font -weight: 600;
+	font -size: 16px;
+}
+/**
+ * div�̍��z�u�A�E�z�u�ɂ�float�𗘗p���܂��B
+ * div�ɂ�width, height���w�肵�āA��ʑS���Y��ɔz�u����悤�ɂ��܂��傤�B
+ * div�̔w�i�F�ɂ͉��L�̐F�𗘗p���Ă��������B
+ * blue: #BBDEFB;
+ * green: #C8E6C9;
+ * pink: #F8BBD0;
+ * button��g�̉E���ɕ\������ɂ́Aposition, right, bottom�𗘗p���܂��B
+ * button���p�ۂɂ���ɂ́uborder-radius�v���g�p���܂��B
+ * button�̐e��div�^�O�ɂ�position�̎w�肪�K�v�ł��B
+ */

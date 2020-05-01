@@ -65,7 +65,8 @@ public class EmployeeSearchServlet extends HttpServlet {
 			sql +=	" where 1=1 \n";
 
 		if(!departmentName.equals("")){
-		sql +=" and  MS_DEPARTMENT.DEPARTMENT_NAME = '"+ departmentName +"' \n";
+		sql +=" and  MS_DEPARTMENT.DEPARTMENT_NAME = '"+ departmentName
+				+"' \n" + " and MS_SYAIN.DEPARTMENT_ID=MS_DEPARTMENT.ID \n";
 		}
 		if(!syainId.equals("")){
 		sql +=" and MS_SYAIN.SYAIN_ID = "+ syainId +" \n" ;
