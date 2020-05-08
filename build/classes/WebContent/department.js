@@ -14,7 +14,7 @@ function executeAjax() {
 	console.log("ok")
 	$.ajax({
 				type : 'GET',
-				url : '/myCart/DepartmentServlet',
+				url : 'http://localhost:8080/myCart/LoginServlet',
 //				async : false,
 				dataType : 'json',
 				data : requestQuery,

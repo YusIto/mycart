@@ -22,9 +22,9 @@ function executeAjax() {
 				success : function(json) {
 					// 確認
 					console.log(json)
-					for (var i = 0; i < json.length; i++) {
+					for (var i = 0; i < json.data.length; i++) {
 
-						var element = json[i];
+						var element = json.data[i];
 
 						var url = 'employeeEdit.html?q=' + element.id;
 
@@ -115,16 +115,10 @@ function searchSyain() {
 					// 確認のために返却値を出力
 					console.log('searchSyainの返却値', json);
 
-					// $
-					// .ajax({
-					// type : 'GET',
-					// url : '/myCart/EmployeeListServlet',
-					// async : false,
-					// dataType : 'json',
-					// data : requestQuery,
-					// success : function(json) {
-					// // 確認
-					// console.log(json)
+					var role = localStorage.getItem('role');
+					console.log(role);
+
+					if(role = 'MANEGER'){
 
 					// ここでリセット
 					var table = document.getElementById('table_data')
@@ -162,8 +156,39 @@ function searchSyain() {
 
 						$("#delete" + element.id).bind('click', deleteAjax);
 					}
-					// }
-					// });
+					}else{
+						console.log('MEMBERのほうのほうに入った確認')
+
+
+						// ここでリセット
+						var table = document.getElementById('table_data')
+						console.log(table)
+						while (table.rows[0])
+							table.deleteRow(0);
+
+						$('#table_data').append('<tr><th>社員ID</th><th>名前</th></tr>')
+
+						for (var i = 0; i < json.length; i++) {
+							var element = json[i];
+
+							var url = 'employeeEdit.html?q=' + element.id;
+
+							var eve = 'location.href=';
+
+							var record = '<tr>'
+									+ '<td>'
+									+ element.id
+									+ '</td>'
+									+ '<td>'
+									+ element.name
+									+ '</td><td></td><td></td>'
+
+							$('#table_data').append(record)
+
+//							$("#delete" + element.id).bind('click', deleteAjax);
+						}
+
+					}
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					// サーバーとの通信に失敗した時の処理
@@ -171,6 +196,27 @@ function searchSyain() {
 					console.log(errorThrown)
 				}
 			});
+}
+
+function logoutAjax() {
+
+	$.ajax({
+		type : 'GET',
+		url : '/myCart/LogoutServlet',
+//		dataType : 'json',
+//		data : requestQuery,
+		success : function(json) {
+			// サーバーとの通信に成功した時の処理
+			// 確認のために返却値を出力
+			console.log('返却値', json);
+			window.location.href="http://localhost:8080/myCart/login.html";
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			// サーバーとの通信に失敗した時の処理
+			alert('データの通信に失敗しました');
+			console.log(errorThrown)
+		}
+	});
 }
 
 // 読み込み時の動作
@@ -187,5 +233,8 @@ $(document).ready(function() {
 
 	// 商品番号検索ボタンを押したときのイベント
 	$('#js-search-button').click(searchSyain);
+
+	//ログアウトボタンを押したときのイベント
+	$('#logout').click(logoutAjax);
 
 });
